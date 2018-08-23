@@ -1,4 +1,9 @@
 class PostsController < Sinatra::Base
+
+  configure :development do
+    register Sinatra::Reloader
+  end
+
   get "/" do
     "<h1>Homepage</h1>"
   end
