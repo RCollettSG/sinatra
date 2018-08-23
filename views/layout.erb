@@ -1,0 +1,14 @@
+<!-- WHEN SERVER SEES erb, IT WILL LOOK FOR A layout.erb FILE FIRST -->
+<!-- ~~ THIS FILE MUST BE CALLED Layout TO WORK CORRECTLY ~~ -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title><%= @title %></title>
+  </head>
+  <body>
+    <%= erb(:"partials/navigation", :layout => false) %>
+    <!-- Templates that were originally selected are injected into yield -->
+    <%= yield %>
+  </body>
+</html>
