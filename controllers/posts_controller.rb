@@ -33,18 +33,14 @@ class PostsController < Sinatra::Base
 
   get "/" do
     @title = "Blog posts"
-    @posts = $posts
+    @posts = Post.all
     # Get the template and layout for the index page
     erb :"posts/index"
   end
 
   get "/new" do
     @title = "Add an item"
-    @post = {
-      id: "",
-      title: "",
-      post_body: ""
-    }
+    @post = Post.new
     erb :"posts/new"
   end
 
@@ -52,46 +48,46 @@ class PostsController < Sinatra::Base
     # Get the ID from the params
     id = params[:id].to_i
     # Assign the ID to a variable
-    @post = $posts[id]
+    @post = Post.find(id)
     erb :"posts/show"
   end
 
   post "/" do
     # Make a new object with the form information
-    new_post = {
-      id: $posts.length,
-      title: params[:title],
-      post_body: params[:post_body]
-    }
-    # Push the object to the array
-    $posts.push(new_post)
+    post = Post.new
+
+    post.title = params[:title]
+    post.post_body = params[:post_body]
+
+    post.save
     # Redirect to /
     redirect "/"
   end
 
   put "/:id" do
+    # Get the id
     id = params[:id].to_i
-
-    post = $posts[id]
-
-    post[:title] = params[:title]
-    post[:post_body] = params[:post_body]
-
-    $posts[id] = post
-
+    # Find the post
+    post = Post.find(id)
+    # Reassign the post
+    post.title = params[:title]
+    post.post_body = params[:post_body]
+    # Update the post
+    post.save
+    # Redirect when this is all done
     redirect "/"
   end
 
   delete "/:id" do
     id = params[:id].to_i
-    $posts.delete_at(id)
+    Post.destroy(id)
     redirect "/"
   end
 
   get "/:id/edit" do
     @title = "Edit an item"
     id = params[:id].to_i
-    @post = $posts[id]
+    @post = Post.find(id)
     erb :"posts/edit"
   end
 end

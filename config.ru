@@ -3,6 +3,7 @@ require "sinatra/contrib"
 # Reloads the server every time the dev environment is saved
 require "sinatra/reloader" if development?
 require "pry"
+require "pg"
 require_relative "./models/post.rb"
 require_relative "./controllers/posts_controller.rb"
 

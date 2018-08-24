@@ -1,17 +1,16 @@
-<form action="/<%= @post[:id] %>" method="post">
+<form action="/<%= @post.id %>" method="post">
   <div>
     <label>Title</label>
-    <input type="text" name="title" placeholder="Enter a title" value="<%= @post[:title] %>">
+    <input type="text" name="title" placeholder="Enter a title" value="<%= @post.title %>">
   </div>
   <div>
     <label>Body</label>
-    <textarea name="post_body" placeholder="The body of text"><%= @post[:post_body] %></textarea>
+    <textarea name="post_body" placeholder="The body of text"><%= @post.post_body %></textarea>
   </div>
   <div>
     <input type="submit" value="Save Post">
   </div>
-  <% if(@post[:id] != "") %>
-    <!-- Flags up to middleware to make it a put when there is an id in the post variable -->
+  <% if(@post.id) %>
     <input type="hidden" name="_method" value="PUT">
   <% end %>
 </form>
